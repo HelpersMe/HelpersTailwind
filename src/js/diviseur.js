@@ -73,6 +73,7 @@ Rdps.addEventListener('input', function() {
     } else {
     	rdpsValue = Rdps.value
     	RdpsInEntity.innerHTML = ''
+        AllDivisuerRdpsInEntity.innerHTML = ""
    	    for (var i = 0; i < rdpsValue; i++) {
 	    	innerHTMLRdps(entityValue,i)
 	    }
@@ -96,12 +97,19 @@ function innerHtmlMulti(numberOfDepot,id,value,type) {
 }
 function innerHTMLRdps(entityName, numberOfRdp) {
 	numberOfRdp++
-	const innerBtn = `<div class="d-flex justify-content-center gap-3 my-2">
-		<button type="button" onclick="show('${entityName}_RDP${numberOfRdp}')" id="show_${entityName}_RDP${numberOfRdp}" class="btn btn-warning">${entityName} Rdp${numberOfRdp}</button>
+	const innerBtn = `<div  class="flex items-center space-x-2">
+        <i class="fa fa-desktop"></i>
+		<button type="button" onclick="show('${entityName}_RDP${numberOfRdp}')" id="show_${entityName}_RDP${numberOfRdp}">${entityName} Rdp${numberOfRdp}</button>
 	</div>`
 	const innerDiviser = `<div class="AllDivisuerRdpsInEntity" id="${entityName}_RDP${numberOfRdp}" style="display: none !important;">
-		<span class="d-flex w-100 justify-content-center">${entityName}_RDP${numberOfRdp}</span><br>
-		<div class="d-flex justify-content-evenly flex-wrap">
+		<h3 class="text-1xl font-bold tracking-tight text-gray-900 sm:text-2xl md:text-3xl p-3">
+            <span class="block">
+                <span class="text-transparent bg-clip-text bg-gradient-to-tr to-pink-500 from-purple-500">
+                    ${entityName} RDP${numberOfRdp}
+                </span>
+            </span>
+        </h3>
+        <div class="d-flex justify-content-evenly flex-wrap">
 			<div>
 			  <label for="Profiles">Profiles Connected</label>
 			  <textarea class="form-control" placeholder="Leave a Profiles Connected here" id="Profiles_${entityName}_RDP${numberOfRdp}"></textarea>
