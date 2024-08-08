@@ -8,7 +8,8 @@ const AllDivisuerRdpsInEntity = document.getElementById('AllDivisuerRdpsInEntity
 
 function Diviseur(id) {
     const result_cheker = document.getElementById(`result_${id}`)
-    console.log(result_cheker != null);
+    result_cheker.removeAttribute("style")
+
     if (result_cheker != null) {
         result_cheker.innerHTML = ''
     }
@@ -22,14 +23,14 @@ function Diviseur(id) {
 	if (profilesValue == '' || allValue == '' || id == '') {
 		alert("Empty inputs / textarea")
 	} else {
-		profilesArr = getArraySplited(profilesValue,"\n")
-		allArr = getArraySplited(allValue,"\n")
+		var profilesArr = getArraySplited(profilesValue,"\n")
+		var allArr = getArraySplited(allValue,"\n")
 
-		sortAll = []
+		var sortAll = []
 
 		for (var i = 0; i < allArr.length; i++) {
-			profileTag = allArr[i]
-			profilesTagArr = getArraySplited(profileTag,"\t")
+			var profileTag = allArr[i]
+			var profilesTagArr = getArraySplited(profileTag,"\t")
 			sortAll.push(profilesTagArr)
 		}
 
@@ -43,8 +44,8 @@ function Diviseur(id) {
 	        tagsArray.push(item[1]);
 	    });
 
-	    profilesArrayDivised = splitArrayIntoSubarrays(profilesArray,dropsValue)
-	    tagsArrayDivised = splitArrayIntoSubarrays(tagsArray,dropsValue)
+	    var profilesArrayDivised = splitArrayIntoSubarrays(profilesArray,dropsValue)
+	    var tagsArrayDivised = splitArrayIntoSubarrays(tagsArray,dropsValue)
 
 	    for (var i = 0; i < dropsValue; i++) {
 	    	innerHtmlMulti(i,id,arrayToString(profilesArrayDivised[i]),"Profiles")
@@ -84,47 +85,48 @@ function innerHtmlMulti(numberOfDepot,id,value,type) {
 	const ResultId = document.getElementById(`result_${id}`)
 	numberOfDepot++
 	const inner = `<div>
-		  	<label  class="d-flex align-items-center justify-content-between" for="${id}_${numberOfDepot}_${type}">
-			  	${id} Depot ${numberOfDepot} : ${type}
-			  	<span class = "btn btn-info" onclick="copyFromThis('${id}_${numberOfDepot}_${type}')">
-			  		Copy
-			  	</span>
-			  	<i class="fa fa-download btn btn-success" onclick="downloadToTxt('${id}_${numberOfDepot}_${type}','${numberOfDepot}')"></i>
-		  	</label>
-		  	<textarea class="form-control my-2" readonly="readonly" id="${id}_${numberOfDepot}_${type}">${value}</textarea>
-		</div>`
+                        <label class="flex items-center justify-between text-sm font-medium text-gray-700" for="${id}_${numberOfDepot}_${type}">
+                            ${id} Depot ${numberOfDepot}: ${type}
+                            <span class="px-2 py-1 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600" onclick="copyFromThis('${id}_${numberOfDepot}_${type}')">
+                                Copy
+                            </span>
+                            <i class="fa fa-download px-2 py-1 bg-green-500 text-white rounded cursor-pointer hover:bg-green-600" onclick="downloadToTxt('${id}_${numberOfDepot}_${type}','${numberOfDepot}')"></i>
+                        </label>
+                        <textarea class="resize-none w-full p-2 border border-gray-300 rounded mt-2 bg-gray-100 text-gray-700" readonly="readonly" id="${id}_${numberOfDepot}_${type}">${value}</textarea>
+                    </div>`
 	ResultId.innerHTML += inner 
 }
 function innerHTMLRdps(entityName, numberOfRdp) {
 	numberOfRdp++
-	const innerBtn = `<div  class="flex items-center space-x-2">
+	const innerBtn = `<div class="flex items-center space-x-2">
         <i class="fa fa-desktop"></i>
 		<button type="button" onclick="show('${entityName}_RDP${numberOfRdp}')" id="show_${entityName}_RDP${numberOfRdp}">${entityName} Rdp${numberOfRdp}</button>
 	</div>`
 	const innerDiviser = `<div class="AllDivisuerRdpsInEntity" id="${entityName}_RDP${numberOfRdp}" style="display: none !important;">
-		<h3 class="text-1xl font-bold tracking-tight text-gray-900 sm:text-2xl md:text-3xl p-3">
+		<h3 class="text-1xl text-center font-bold tracking-tight text-gray-900 sm:text-2xl md:text-3xl p-3">
             <span class="block">
                 <span class="text-transparent bg-clip-text bg-gradient-to-tr to-pink-500 from-purple-500">
                     ${entityName} RDP${numberOfRdp}
                 </span>
             </span>
         </h3>
-        <div class="d-flex justify-content-evenly flex-wrap">
-			<div>
-			  <label for="Profiles">Profiles Connected</label>
-			  <textarea class="form-control" placeholder="Leave a Profiles Connected here" id="Profiles_${entityName}_RDP${numberOfRdp}"></textarea>
-			</div>
+        <div class="flex flex-col items-center gap-3 p-4 bg-white rounded-lg shadow-md">
+            <div class="flex gap-3">
+                <div class="flex flex-col">
+                    <label for="Profiles_${entityName}_RDP${numberOfRdp}" class="text-sm font-medium text-gray-700">Profiles Connected</label>
+                    <textarea class="resize-none mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400" placeholder="Leave a Profiles Connected here" id="Profiles_${entityName}_RDP${numberOfRdp}"></textarea>
+                </div>
 
-			<div>
-			  <label for="All">All Profiles + All Tags</label>
-			  <textarea class="form-control" placeholder="Leave a All Profiles + All Tags here" id="All_${entityName}_RDP${numberOfRdp}"></textarea>
-			</div>
-		</div>
-
-		<div class="d-flex justify-content-center gap-3 my-2">
-			<button type="button" onclick="Diviseur('${entityName}_RDP${numberOfRdp}')" id="diviseur_${entityName}_RDP${numberOfRdp}" class="btn btn-info">Diviseur</button>
-		</div>
-		<div class="d-flex justify-content-evenly flex-wrap gap-3 container" id="result_${entityName}_RDP${numberOfRdp}"></div>
+                <div class="flex flex-col">
+                    <label for="All_${entityName}_RDP${numberOfRdp}" class="text-sm font-medium text-gray-700">All Profiles + All Tags</label>
+                    <textarea class="mt-1 p-2 resize-none border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400" placeholder="Leave a All Profiles + All Tags here" id="All_${entityName}_RDP${numberOfRdp}"></textarea>
+                </div>
+            </div>
+            <button type="button" onclick="Diviseur('${entityName}_RDP${numberOfRdp}')" id="diviseur_${entityName}_RDP${numberOfRdp}" class="w-1/4 px-4 text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                Diviseur
+            </button>
+        </div>
+		<div class="overflow-y-auto flex flex-wrap h-full w-58.1p items-center gap-3 p-4 bg-white rounded-lg shadow-md" id="result_${entityName}_RDP${numberOfRdp}" style="display:none !important;"></div>
 	</div>`
 	RdpsInEntity.innerHTML += innerBtn 
 	AllDivisuerRdpsInEntity.innerHTML += innerDiviser 
